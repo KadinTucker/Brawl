@@ -34,13 +34,17 @@ class Entity {
 
     /**
      * Moves the entity according to its motion
-     * Accounts for friction (mu = 0.1)
-     * TODO: make friction optional
      */
     void move() {
         this.rect = new dRectangle(this.motion.x + this.rect.initialPoint.x, 
         this.motion.y + this.rect.initialPoint.y, this.rect.extent.x, this.rect.extent.y);
-        this.motion *= 0.9;
+    }
+
+    /**
+     * Draws the entity to the screen
+     */
+    void draw(Display container) {
+        container.renderer.copy(this.texture, cast(int)this.initialPoint.x, cast(int)this.initialPoint.y);
     }
 
 }

@@ -4,6 +4,7 @@ import d2d;
 
 import components.PanelText;
 import std.datetime;
+import logic.entity.Character;
 import logic.entity.Entity;
 
 immutable double moveRate = 0.5; //The default acceleration rate per tick for heroes
@@ -22,7 +23,7 @@ class TestGameActivity : Activity {
      */
     this(Display container){
         super(container);
-        this.allEntities ~= new Entity(100, 100, 64, 64, new Texture(loadImage("res/Taevas.png"), this.container.renderer));
+        this.allEntities ~= new Character(100, 100, 64, 64, new Texture(loadImage("res/Taevas.png"), this.container.renderer));
     }
 
     override void draw() {
