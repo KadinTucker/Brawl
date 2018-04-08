@@ -1,0 +1,10 @@
+{
+	"name": "brawl",
+	"authors": [
+		"Kadin Tucker"
+	],
+	"dependencies": {
+		"d2d": "~>1.5.5"
+	},
+	"description": "A fighting game of sorts",
+}
