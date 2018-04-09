@@ -23,7 +23,8 @@ class TestGameActivity : Activity {
      */
     this(Display container){
         super(container);
-        this.allEntities ~= new Character(100, 100, 64, 64, new Texture(loadImage("res/Taevas.png"), this.container.renderer));
+        this.allEntities ~= new Character(100, 100, 64, 64, new Texture(loadImage("res/Taevas.png"), this.container.renderer),
+                Statistics([121, 88, 143, 88, 110, 121, 88, 121], [90, 110, 130, 100, 80, 110, 90, 100], 0.8, 30, 35, 35));
     }
 
     override void draw() {
