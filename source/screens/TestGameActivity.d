@@ -30,7 +30,7 @@ class TestGameActivity : Activity {
     override void draw() {
         this.container.renderer.clear(Color(150, 50, 50));
         foreach(ent; allEntities) {
-            this.container.renderer.copy(ent.texture, cast(int)ent.initialPoint.x, cast(int)ent.initialPoint.y);
+            ent.draw(this.container);
         }
     }
 
@@ -63,6 +63,7 @@ class TestGameActivity : Activity {
             this.allEntities[0].motion.x += moveAmount;
         }
         foreach(ent; allEntities) {
+            ent.angle = -(cast(iVector)ent.rect.initialPoint - this.container.mouse.location).directionAngles.x - 1.57;
             ent.move();
         }
     }

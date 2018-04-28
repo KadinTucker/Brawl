@@ -11,6 +11,7 @@ class Entity {
     dRectangle rect; ///The location and dimensions of the object
     Texture texture; ///The texture which represents the entity
     dVector motion; ///The current velocity of the entity
+    double angle = 0.0; ///The angle this entity is facing
 
     alias rect this;
 
@@ -44,7 +45,8 @@ class Entity {
      * Draws the entity to the screen
      */
     void draw(Display container) {
-        container.renderer.copy(this.texture, cast(int)this.initialPoint.x, cast(int)this.initialPoint.y);
+        container.renderer.copy(this.texture, new iRectangle(cast(int)this.rect.initialPoint.x, cast(int)this.rect.initialPoint.y, 
+                cast(int)this.rect.extent.x, cast(int)this.rect.extent.y), this.angle);
     }
 
 }
