@@ -44,9 +44,9 @@ class Entity {
     /**
      * Draws the entity to the screen
      */
-    void draw(Display container) {
-        container.renderer.copy(this.texture, new iRectangle(cast(int)this.rect.initialPoint.x, cast(int)this.rect.initialPoint.y, 
-                cast(int)this.rect.extent.x, cast(int)this.rect.extent.y), this.angle);
+    void draw(Display container) {      
+        container.renderer.copy(this.texture, cast(int)this.rect.initialPoint.x * 2 + cast(int)this.rect.initialPoint.y * 2, 
+                cast(int)this.rect.initialPoint.y - cast(int)this.rect.initialPoint.x);
     }
 
 }

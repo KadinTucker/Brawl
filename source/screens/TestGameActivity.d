@@ -4,6 +4,7 @@ import d2d;
 
 import components.PanelText;
 import std.datetime;
+import std.math;
 import logic.entity.Character;
 import logic.entity.Entity;
 
@@ -35,35 +36,30 @@ class TestGameActivity : Activity {
     }
 
     override void update() {
-        double moveAmount = 0.5;
+        double moveAmount = moveRate;
+        dVector delta = new dVector(0.0, 0.0); 
         if(this.container.keyboard.allPressables[SDLK_LSHIFT].isPressed) {
             moveAmount *= 1.5;
         }
         if(this.container.keyboard.allPressables[SDLK_w].isPressed) {
-            this.allEntities[0].motion.y -= moveAmount;
-            if(this.container.keyboard.allPressables[SDLK_a].isPressed) {
-                this.allEntities[0].motion.x += moveAmount * 0.3;
-                this.allEntities[0].motion.y += moveAmount * 0.3;
-            } else if(this.container.keyboard.allPressables[SDLK_d].isPressed) {
-                this.allEntities[0].motion.x -= moveAmount * 0.3;
-                this.allEntities[0].motion.y += moveAmount * 0.3;
-            }
+            delta.y -= 1;
+            delta.x += 1;
         }if(this.container.keyboard.allPressables[SDLK_a].isPressed) {
-            this.allEntities[0].motion.x -= moveAmount;
+            delta.y -= 1;
+            delta.x -= 1;
         }if(this.container.keyboard.allPressables[SDLK_s].isPressed) {
-            this.allEntities[0].motion.y += moveAmount;
-            if(this.container.keyboard.allPressables[SDLK_a].isPressed) {
-                this.allEntities[0].motion.x += moveAmount * 0.3;
-                this.allEntities[0].motion.y -= moveAmount * 0.3;
-            } else if(this.container.keyboard.allPressables[SDLK_d].isPressed) {
-                this.allEntities[0].motion.x -= moveAmount * 0.3;
-                this.allEntities[0].motion.y -= moveAmount * 0.3;
-            }
+            delta.y += 1;
+            delta.x -= 1;
         }if(this.container.keyboard.allPressables[SDLK_d].isPressed) {
-            this.allEntities[0].motion.x += moveAmount;
+            delta.y += 1;
+            delta.x += 1;
         }
+        if(delta.magnitude != 0) {
+            delta.magnitude = moveAmount;
+        }
+        this.allEntities[0].motion.x += delta.x;
+        this.allEntities[0].motion.y += delta.y;
         foreach(ent; allEntities) {
-            ent.angle = -(cast(iVector)ent.rect.initialPoint - this.container.mouse.location).directionAngles.x - 1.57;
             ent.move();
         }
     }
@@ -72,7 +68,7 @@ class TestGameActivity : Activity {
         if(event.type == SDL_KEYUP) {
             if(event.key.keysym.sym == SDLK_LSHIFT && Clock.currTime() - 
                     this.container.keyboard.allPressables[SDLK_LSHIFT].lastPressed < dur!"msecs"(300)) {
-                this.allEntities[0].motion.magnitude = 0.5 * 30;
+                this.allEntities[0].motion.magnitude = moveRate * 30;
             }
         }
     }
