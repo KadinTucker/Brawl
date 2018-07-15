@@ -8,7 +8,7 @@ import std.math;
 import logic.entity.Character;
 import logic.entity.Entity;
 
-immutable double moveRate = 0.5; //The default acceleration rate per tick for heroes
+immutable double moveRate = 0.1; //The default acceleration rate per tick for heroes
 
 /**
  * The main game activity
@@ -16,7 +16,8 @@ immutable double moveRate = 0.5; //The default acceleration rate per tick for he
  */
 class TestGameActivity : Activity {
 
-    Entity[] allEntities; //A list of all of the entities in the game
+    Entity[] allEntities; ///A list of all of the entities in the game
+    Texture drawTexture; /// The draw texture for the background of the screen
 
     /**
      * Initializes the game
@@ -26,10 +27,19 @@ class TestGameActivity : Activity {
         super(container);
         this.allEntities ~= new Character(100, 100, 64, 64, new Texture(loadImage("res/Taevas.png"), this.container.renderer),
                 Statistics([121, 88, 143, 88, 110, 121, 88, 121], [90, 110, 130, 100, 80, 110, 90, 100], 0.8, 30, 35, 35));
+        Surface drawSurface = new Surface(1000, 600);
+        Surface bgTileImage = loadImage("res/background.png");
+        for(int x = 0; x < 1000 / 96 + 1; x++) {
+            for(int y = 0; y < 600 / 48 + 1; y++) {
+                drawSurface.blit(bgTileImage, null, x * 96, y * 48);
+            }
+        }
+        this.drawTexture = new Texture(drawSurface, container.renderer);
     }
 
     override void draw() {
         this.container.renderer.clear(Color(150, 50, 50));
+        this.container.renderer.copy(drawTexture, 0, 0);
         foreach(ent; allEntities) {
             ent.draw(this.container);
         }
@@ -42,17 +52,17 @@ class TestGameActivity : Activity {
             moveAmount *= 1.5;
         }
         if(this.container.keyboard.allPressables[SDLK_w].isPressed) {
-            delta.y -= 1;
-            delta.x += 1;
+            delta.y -= moveAmount;
+            delta.x += moveAmount;
         }if(this.container.keyboard.allPressables[SDLK_a].isPressed) {
-            delta.y -= 1;
-            delta.x -= 1;
+            delta.y -= moveAmount;
+            delta.x -= moveAmount;
         }if(this.container.keyboard.allPressables[SDLK_s].isPressed) {
-            delta.y += 1;
-            delta.x -= 1;
+            delta.y += moveAmount;
+            delta.x -= moveAmount;
         }if(this.container.keyboard.allPressables[SDLK_d].isPressed) {
-            delta.y += 1;
-            delta.x += 1;
+            delta.y += moveAmount;
+            delta.x += moveAmount;
         }
         if(delta.magnitude != 0) {
             delta.magnitude = moveAmount;
