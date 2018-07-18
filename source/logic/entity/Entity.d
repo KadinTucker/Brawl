@@ -11,7 +11,7 @@ class Entity {
     dRectangle rect; ///The location and dimensions of the object
     Texture texture; ///The texture which represents the entity
     dVector motion; ///The current velocity of the entity
-    double angle = 0.0; ///The angle this entity is facing
+    bool isDestroyed; ////Whether or not the entity is destroyed
 
     alias rect this;
 

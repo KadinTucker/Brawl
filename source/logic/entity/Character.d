@@ -11,6 +11,7 @@ struct Statistics {
     int strength; ///The amount of health points
     int agility; ///Amount of stamina points
     int intellect; ///Amount of mana points
+    int radius; ///The radius of the character
 
 }
 
